@@ -1,4 +1,4 @@
-import database #import other .py file
+import database  # import other .py file
 import datetime
 
 menu = """Please select one of the following options:
@@ -14,7 +14,6 @@ menu = """Please select one of the following options:
 Your selection: """
 welcome = "Welcome to the watchlist app!"
 
-
 print(welcome)
 database.create_table()
 
@@ -24,9 +23,10 @@ def prompt_add_movie():
     release_date = input("Release date (DD-MM-YYYY): ")
     parsed_date = datetime.datetime.strptime(release_date, "%d-%m-%Y")
     timestamp = parsed_date.timestamp()
-    
+
     database.add_movie(title, timestamp)
-    
+
+
 def print_movie_list(heading, movies):
     print(f"-- {heading} movies -- ")
     for _id, title, release_date in movies:
@@ -34,26 +34,29 @@ def print_movie_list(heading, movies):
         human_date = movie_date.strftime("%b %d %Y")
         print(f"{_id}: {title} (released on {human_date})")
     print("--- \n")
-       
+
 
 def prompt_watch_movie():
-    username  = input("Username: ")
+    username = input("Username: ")
     movie_id = input("Movie ID: ")
     database.watch_movie(username, movie_id)
-    
+
+
 def prompt_add_user():
     username = input("Username: ")
-    database.add_user(username)   
+    database.add_user(username)
+
 
 def prompt_show_watched_movies():
     username = input("Username: ")
     movies = database.get_watched_movies(username)
-    if movies: 
+    if movies:
         print_movie_list(f"{username}'s watched", movies)
     else:
         print("That user has hasn't watched any movies yet.")
-    print("--- \n")
-        
+
+
+
 def prompt_search_movies():
     search_term = input("Enter the partial movie title: ")
     movies = database.search_movies(search_term)
@@ -62,7 +65,7 @@ def prompt_search_movies():
     else:
         print(f"Found no movies with '{search_term}' in the movie title. Please try again.")
     print("--- \n")
-        
+
 while (user_input := input(menu)) != "8":
     if user_input == "1":
         prompt_add_movie()
